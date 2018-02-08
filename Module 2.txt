@@ -1,0 +1,96 @@
+
+
+
+
+Public Sub YearlyChangeModerate()
+
+
+For Each ws In Worksheets
+
+Dim WorksheetsName As String
+
+Dim lastrow As Long
+
+lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+Dim i As Long  '--- declaer i variable
+Dim a As Long
+
+Dim inputRowNum As Integer ' this is for the row number for the input in column I and J
+inputRowNum = 2
+
+
+Dim PriceChange As Long
+
+Dim PercentageChange As Double
+
+
+
+Dim Volume As Long
+
+Volume = 0
+
+
+ws.Range("K1").Value = "Year Price Change"
+ws.Range("L1").Value = "Percentage Price Change"
+
+
+
+     For i = 2 To lastrow
+     
+            If ws.Cells(i, 1).Value = ws.Cells(i + 1, 1).Value Then
+            
+            Volume = Volume + 1 ' set a volume to be 0 and increment as we loop,
+            ' so we can subtract the volume form the each end ticker row number to get each start ticker row #
+            
+            
+            ElseIf ws.Cells(i, 1).Value <> ws.Cells(i + 1, 1).Value Then
+       
+               PriceChange = ws.Cells(i - Volume, 3).Value - ws.Cells(i, 6).Value
+                
+               if ws.Cells(i - Volume, 3).Value = 0 then 
+                PercentageChange = 0 
+               else
+                
+               PercentageChange = PriceChange / ws.Cells(i - Volume, 3).Value
+               '(ws.Cells(i - Volume, 3).Value - ws.Cells(i, 6).Value)
+               
+               ' format the percentage chaneg to percentage
+               
+               
+               
+               ws.Range("K" & inputRowNum).Value = PriceChange
+               
+               'input the percentage change
+               ws.Range("L" & inputRowNum).Value = PercentageChange
+               
+               
+               inputRowNum = inputRowNum + 1  ' keep incrementing the row number for the input cells
+               
+               Volume = 0     ' reset the value of volume to be zero while resum later
+               
+            End If
+
+       Next i
+      
+
+Next ws
+
+End Sub
+
+
+Public Sub Clear()  '  to clear all the input
+
+For Each ws In Worksheets
+
+Dim WorksheetsName As String
+
+ws.Range("I:R").Clear
+
+
+Next ws
+
+End Sub
+
+
+
