@@ -1,0 +1,48 @@
+' Module1
+
+Public Sub SumVolEasy()
+
+
+For Each ws In Worksheets
+
+Dim WorksheetsName As String
+
+Dim lastrow As Long
+
+lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+Dim i As Long
+Dim inputRowNum As Integer ' this is for the row number for the input in column I and J
+inputRowNum = 2
+Dim Volume As Double
+Volume = 0
+Dim column As Integer
+column = 1
+
+ws.Range("I1").Value = "Tickers"  ' add the titles in the input row
+ws.Range("J1").Value = "Total_Vol"
+
+
+
+     For i = 2 To lastrow
+
+       If ws.Cells(i, column).Value <> ws.Cells(i + 1, column).Value Then
+   
+            Volume = Volume + ws.Cells(i, 7).Value
+   
+            ws.Range("I" & inputRowNum).Value = ws.Cells(i, 1).Value
+            ws.Range("J" & inputRowNum).Value = Volume
+            inputRowNum = inputRowNum + 1 ' keep incrementing the row number for the input cells
+            Volume = 0     ' reset the value of volume to be zero while resum later
+   
+       ElseIf ws.Cells(i, 1).Value = ws.Cells(i + 1, 1).Value Then
+   
+            Volume = Volume + ws.Cells(i, 7).Value
+     End If
+
+Next i
+
+Next ws
+
+End Sub
+

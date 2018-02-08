@@ -1,0 +1,80 @@
+Sub Match()
+
+'
+' Match Macro
+' input matched number in column R
+'
+' Keyboard Shortcut: Ctrl+m
+'
+    Range("R1").Select
+    ActiveCell.FormulaR1C1 = "Match Row"
+    Range("R2").Select
+    ActiveCell.FormulaR1C1 = "=MATCH(R2C17,C12,0)"
+    Range("R3").Select
+    ActiveCell.FormulaR1C1 = "=MATCH(R3C17,C12,0)"
+    Range("R4").Select
+    ActiveCell.FormulaR1C1 = "=MATCH(R4C17,C10,0)"
+    Range("R5").Select
+
+End Sub
+
+Sub MatchTicker()
+
+
+Range("P4").Value = Range("I" & Range("R4").Value).Value
+Range("P3").Value = Range("I" & Range("R3").Value).Value
+Range("P2").Value = Range("I" & Range("R2").Value).Value
+'ws.Range("Q2").Value = Format(ws.Range("Q2").Value, "Percent")
+'ws.Range("Q3").Value = Format(ws.Range("Q3").Value, "Percent")
+
+
+End Sub
+
+Sub ConditionFormat()
+
+For Each ws In Worksheets
+
+Dim WorksheetsName As String
+
+Dim lastrow As Long
+
+lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+For a = 2 To lastrow
+        
+               If ws.Cells(a, 11).Value >= 0 And ws.Cells(a, 11).Value <> "" Then
+               
+               ws.Cells(a, 11).Interior.ColorIndex = 4 ' Green
+               
+               ElseIf ws.Cells(a, 11).Value < 0 And ws.Cells(a, 11).Value <> "" Then
+               
+               ws.Cells(a, 11).Interior.ColorIndex = 3  'Red
+               
+               End If
+               
+         Next a
+   Next ws
+
+End Sub
+
+               
+
+
+
+
+Public Sub WorksheetLoop()
+
+    For i = 1 To Worksheets.Count
+        Worksheets(i).Select
+        
+        Match
+        MatchTicker
+        ConditionFormat
+    Next i
+
+
+End Sub
+
+
+
+

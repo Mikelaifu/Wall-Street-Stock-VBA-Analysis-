@@ -1,0 +1,51 @@
+
+Public Sub FindWinnerNLoserHard()
+
+For Each ws In Worksheets
+
+Dim WorksheetsName As String
+
+Dim lastrow As Long
+
+lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+ws.Range("O2").Value = "Greatest % Increase"
+ws.Range("O3").Value = "Greatest % Decrease"
+ws.Range("O4").Value = "Greatest Total Volume"
+ws.Range("P1").Value = "Ticker"
+ws.Range("Q1").Value = "Value"
+
+Dim i As Long '--- declaer i variable for First Loop
+Dim j As Long '---- declare j for second Loop
+Dim k As Long
+
+
+Dim inputRowNum As Integer ' this is for the row number for the input in column I and J
+inputRowNum = 0
+
+Dim MaxVol As Long  ' used to find the max in Volume
+MaxVol = 0
+
+Dim MaxPerIn As Long
+MaxPerIn = 0
+
+Dim MinPer As Long
+MinPer = 0
+
+Dim MaxVolRange As Range
+Set MaxVolRange = ws.Range("J:J")
+Dim PercRange As Range
+Set PercRange = ws.Range("L:L")
+'-------------------------------Fine the Max(Volume and Percentage)--------------------------
+ws.Range("Q4").Value = WorksheetFunction.Max(MaxVolRange.Value)
+ws.Range("Q3").Value = WorksheetFunction.Min(PercRange.Value)
+ws.Range("Q2").Value = WorksheetFunction.Max(PercRange.Value)
+
+'---------------------------------input the result-----------------------------------------------
+
+
+
+
+Next ws
+End Sub
+
